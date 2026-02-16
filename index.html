@@ -193,7 +193,7 @@
                 const backendUrl = "https://api.cloud-platform.pro/offtube";
                 // Используем правильный путь к хабу - /downloadHub
                 connection = new signalR.HubConnectionBuilder()
-                    .withUrl("/downloadHub")  // Изменено с /progressHub на /downloadHub
+                    .withUrl(backendUrl + "/downloadHub")  // Изменено с /progressHub на /downloadHub
                     .withAutomaticReconnect([0, 2000, 5000, 10000, 30000])
                     .configureLogging(signalR.LogLevel.Information)
                     .build();
@@ -341,8 +341,10 @@
                 await connection.invoke("JoinGroup", downloadId);
                 console.log("Joined group:", downloadId);
 
+                const backendUrl = "https://api.cloud-platform.pro/offtube";
+
                 // Отправляем запрос на сервер
-                const response = await fetch('/api/download/download', {
+                const response = await fetch(backendUrl + '/video/download', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
