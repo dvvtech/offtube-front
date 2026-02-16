@@ -338,7 +338,7 @@
                 downloadId = generateDownloadId();
                 
                 // Подключаемся к группе SignalR
-                await connection.invoke("JoinGroup", downloadId);
+                await connection.invoke("JoinDownloadGroup", downloadId);
                 console.log("Joined group:", downloadId);
 
                 const backendUrl = "https://api.cloud-platform.pro/offtube";
