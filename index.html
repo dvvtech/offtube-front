@@ -190,6 +190,7 @@
         // Инициализация SignalR соединения
         async function initializeSignalR() {
             try {
+                const backendUrl = "https://api.cloud-platform.pro/offtube";
                 // Используем правильный путь к хабу - /downloadHub
                 connection = new signalR.HubConnectionBuilder()
                     .withUrl("/downloadHub")  // Изменено с /progressHub на /downloadHub
