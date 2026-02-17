@@ -330,7 +330,7 @@
                 if (!connection || connection.state !== signalR.HubConnectionState.Connected) {
                     const connected = await initializeSignalR();
                     if (!connected) {
-                        throw new Error("Не удалось подключиться к серверу");
+                        //throw new Error("Не удалось подключиться к серверу");
                     }
                 }
 
@@ -338,7 +338,7 @@
                 downloadId = generateDownloadId();
                 
                 // Подключаемся к группе SignalR
-                await connection.invoke("JoinDownloadGroup", downloadId);
+                //await connection.invoke("JoinDownloadGroup", downloadId);
                 console.log("Joined group:", downloadId);
 
                 const backendUrl = "https://api.cloud-platform.pro/offtube";
