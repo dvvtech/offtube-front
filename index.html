@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,15 +10,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
         }
+
         .animate-pulse-slow {
             animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
+
         .progress-bar {
             transition: width 0.3s ease-in-out;
         }
+
         .toast-notification {
             position: fixed;
             bottom: 20px;
@@ -25,11 +36,13 @@
             z-index: 1000;
             animation: slideIn 0.3s ease-out;
         }
+
         @keyframes slideIn {
             from {
                 transform: translateX(100%);
                 opacity: 0;
             }
+
             to {
                 transform: translateX(0);
                 opacity: 1;
@@ -37,6 +50,7 @@
         }
     </style>
 </head>
+
 <body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen flex items-center justify-center p-4">
     <div class="max-w-2xl w-full">
         <!-- Карточка загрузчика -->
@@ -61,18 +75,15 @@
                     </label>
                     <div class="flex flex-col sm:flex-row gap-3">
                         <div class="flex-1 relative">
-                            <input type="url" 
-                                   id="url" 
-                                   class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
-                                   placeholder="https://www.youtube.com/watch?v=..."
-                                   value="https://www.youtube.com/watch?v=uVOzD-GX0kM">
-                            <i class="fa-solid fa-paste absolute right-3 top-3 text-gray-400 cursor-pointer hover:text-white transition-colors duration-200" 
-                               onclick="pasteFromClipboard()"
-                               title="Вставить из буфера обмена"></i>
+                            <input type="url" id="url"
+                                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                placeholder="https://www.youtube.com/watch?v=..."
+                                value="https://www.youtube.com/watch?v=uVOzD-GX0kM">
+                            <i class="fa-solid fa-paste absolute right-3 top-3 text-gray-400 cursor-pointer hover:text-white transition-colors duration-200"
+                                onclick="pasteFromClipboard()" title="Вставить из буфера обмена"></i>
                         </div>
-                        <button onclick="startDownload()" 
-                                id="downloadBtn"
-                                class="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-xl hover:from-purple-700 hover:to-blue-700 transform hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+                        <button onclick="startDownload()" id="downloadBtn"
+                            class="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-xl hover:from-purple-700 hover:to-blue-700 transform hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
                             <i class="fa-solid fa-download"></i>
                             <span>Скачать</span>
                         </button>
@@ -85,24 +96,24 @@
                         <i class="fa-solid fa-sliders mr-2"></i>Качество видео
                     </label>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                        <button onclick="setQuality('best[height <= 360]', this)" 
-                                class="quality-btn px-3 py-2 bg-gray-700 rounded-lg text-gray-300 hover:bg-gray-600 transition-all duration-200 text-sm"
-                                data-quality="360p">
+                        <button onclick="setQuality('best[height <= 360]', this)"
+                            class="quality-btn px-3 py-2 bg-gray-700 rounded-lg text-gray-300 hover:bg-gray-600 transition-all duration-200 text-sm"
+                            data-quality="360p">
                             360p
                         </button>
-                        <button onclick="setQuality('best[height <= 480]', this)" 
-                                class="quality-btn px-3 py-2 bg-purple-600 text-white rounded-lg transition-all duration-200 text-sm"
-                                data-quality="480p">
+                        <button onclick="setQuality('best[height <= 480]', this)"
+                            class="quality-btn px-3 py-2 bg-purple-600 text-white rounded-lg transition-all duration-200 text-sm"
+                            data-quality="480p">
                             480p
                         </button>
-                        <button onclick="setQuality('best[height <= 720]', this)" 
-                                class="quality-btn px-3 py-2 bg-gray-700 rounded-lg text-gray-300 hover:bg-gray-600 transition-all duration-200 text-sm"
-                                data-quality="720p">
+                        <button onclick="setQuality('best[height <= 720]', this)"
+                            class="quality-btn px-3 py-2 bg-gray-700 rounded-lg text-gray-300 hover:bg-gray-600 transition-all duration-200 text-sm"
+                            data-quality="720p">
                             720p
                         </button>
-                        <button onclick="setQuality('bestaudio', this)" 
-                                class="quality-btn px-3 py-2 bg-gray-700 rounded-lg text-gray-300 hover:bg-gray-600 transition-all duration-200 text-sm"
-                                data-quality="mp3">
+                        <button onclick="setQuality('bestaudio', this)"
+                            class="quality-btn px-3 py-2 bg-gray-700 rounded-lg text-gray-300 hover:bg-gray-600 transition-all duration-200 text-sm"
+                            data-quality="mp3">
                             <i class="fa-solid fa-music mr-1"></i>MP3
                         </button>
                     </div>
@@ -116,7 +127,7 @@
                             <span class="text-gray-300 text-sm" id="statusText">Подготовка...</span>
                             <span class="text-gray-400 text-sm truncate max-w-[200px]" id="fileName"></span>
                         </div>
-                        
+
                         <!-- Прогресс бар -->
                         <div class="relative pt-1">
                             <div class="flex mb-2 items-center justify-between">
@@ -126,15 +137,15 @@
                                     </span>
                                 </div>
                                 <div class="text-right">
-                                    <span class="text-xs font-semibold inline-block text-purple-400" id="progressPercent">
+                                    <span class="text-xs font-semibold inline-block text-purple-400"
+                                        id="progressPercent">
                                         0%
                                     </span>
                                 </div>
                             </div>
                             <div class="overflow-hidden h-2 mb-4 text-xs flex rounded-full bg-gray-600">
-                                <div id="progressBar" 
-                                     style="width: 0%" 
-                                     class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gradient-to-r from-purple-500 to-blue-500 progress-bar">
+                                <div id="progressBar" style="width: 0%"
+                                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gradient-to-r from-purple-500 to-blue-500 progress-bar">
                                 </div>
                             </div>
                         </div>
@@ -225,7 +236,7 @@
                 await connection.start();
                 console.log("SignalR connected to /downloadHub");
                 showToast("Подключено к серверу", "success");
-                
+
                 return true;
             } catch (err) {
                 console.error("SignalR connection error:", err);
@@ -238,29 +249,29 @@
         function showToast(message, type = 'info') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
-            
+
             const colors = {
                 success: 'bg-green-500',
                 error: 'bg-red-500',
                 info: 'bg-blue-500',
                 warning: 'bg-yellow-500'
             };
-            
+
             const icons = {
                 success: 'fa-circle-check',
                 error: 'fa-circle-exclamation',
                 info: 'fa-circle-info',
                 warning: 'fa-triangle-exclamation'
             };
-            
+
             toast.className = `toast-notification ${colors[type]} text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2 transform transition-all duration-300`;
             toast.innerHTML = `
                 <i class="fa-solid ${icons[type]}"></i>
                 <span>${message}</span>
             `;
-            
+
             container.appendChild(toast);
-            
+
             setTimeout(() => {
                 toast.style.opacity = '0';
                 toast.style.transform = 'translateX(100%)';
@@ -282,20 +293,20 @@
         // Установка качества
         function setQuality(quality, element) {
             currentQuality = quality;
-            
+
             // Обновление стилей кнопок
             document.querySelectorAll('.quality-btn').forEach(btn => {
                 btn.classList.remove('bg-purple-600', 'text-white');
                 btn.classList.add('bg-gray-700', 'text-gray-300');
             });
-            
+
             element.classList.remove('bg-gray-700', 'text-gray-300');
             element.classList.add('bg-purple-600', 'text-white');
 
             // Показываем уведомление
             const qualityNames = {
                 'best[height <= 360]': '360p',
-                'best[height <= 480]': '480p', 
+                'best[height <= 480]': '480p',
                 'best[height <= 720]': '720p',
                 'bestaudio': 'MP3'
             };
@@ -305,7 +316,7 @@
         // Начало загрузки
         async function startDownload() {
             const url = document.getElementById('url').value.trim();
-            
+
             if (!url) {
                 showToast('Введите ссылку на видео', 'error');
                 return;
@@ -319,7 +330,7 @@
             // Показываем секцию загрузки
             document.getElementById('downloadInfo').classList.remove('hidden');
             document.getElementById('errorMessage').classList.add('hidden');
-            
+
             // Блокируем кнопку
             const downloadBtn = document.getElementById('downloadBtn');
             downloadBtn.disabled = true;
@@ -330,15 +341,15 @@
                 if (!connection || connection.state !== signalR.HubConnectionState.Connected) {
                     const connected = await initializeSignalR();
                     if (!connected) {
-                        //throw new Error("Не удалось подключиться к серверу");
+                        throw new Error("Не удалось подключиться к серверу");
                     }
                 }
 
                 // Генерируем ID для этой загрузки
                 downloadId = generateDownloadId();
-                
+
                 // Подключаемся к группе SignalR
-                //await connection.invoke("JoinDownloadGroup", downloadId);
+                await connection.invoke("JoinDownloadGroup", downloadId);
                 console.log("Joined group:", downloadId);
 
                 const backendUrl = "https://api.cloud-platform.pro/offtube";
@@ -362,7 +373,7 @@
 
                 // Получаем файл
                 const blob = await response.blob();
-                
+
                 // Извлекаем имя файла из заголовков
                 const contentDisposition = response.headers.get('Content-Disposition');
                 let filename = 'video.mp4';
@@ -389,20 +400,20 @@
         // Обновление прогресса
         function updateProgress(progress) {
             const percentage = Math.round(progress.percentage || 0);
-            
+
             document.getElementById('progressBar').style.width = percentage + '%';
             document.getElementById('progressPercent').textContent = percentage + '%';
             document.getElementById('statusText').textContent = progress.status || 'Загрузка...';
-            
+
             if (progress.fileName) {
                 const fileName = progress.fileName.split('\\').pop().split('/').pop();
                 document.getElementById('fileName').textContent = fileName;
             }
-            
+
             if (progress.speed) {
                 document.getElementById('speed').textContent = formatSpeed(progress.speed);
             }
-            
+
             if (progress.eta) {
                 document.getElementById('eta').textContent = progress.eta;
             }
@@ -413,11 +424,11 @@
             document.getElementById('statusText').textContent = 'Загрузка завершена!';
             document.getElementById('progressBar').style.width = '100%';
             document.getElementById('progressPercent').textContent = '100%';
-            
+
             if (data.fileSize) {
                 document.getElementById('fileSize').textContent = formatFileSize(data.fileSize);
             }
-            
+
             showToast('Файл готов к скачиванию!', 'success');
         }
 
@@ -431,9 +442,9 @@
             a.click();
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
-            
+
             showToast(`Скачивание начато: ${filename}`, 'success');
-            
+
             // Сброс интерфейса через 3 секунды
             setTimeout(resetInterface, 3000);
         }
@@ -455,7 +466,7 @@
             document.getElementById('errorMessage').classList.remove('hidden');
             document.getElementById('errorText').textContent = message;
             document.getElementById('downloadInfo').classList.add('hidden');
-            
+
             showToast(message, 'error');
         }
 
@@ -471,7 +482,7 @@
 
         // Генерация ID
         function generateDownloadId() {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                 const r = Math.random() * 16 | 0;
                 const v = c === 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
@@ -482,11 +493,11 @@
         function formatSpeed(speed) {
             if (!speed) return '0 KB/s';
             if (typeof speed === 'string') return speed;
-            
+
             const units = ['B/s', 'KB/s', 'MB/s', 'GB/s'];
             let index = 0;
             let value = parseFloat(speed);
-            
+
             while (value >= 1024 && index < units.length - 1) {
                 value /= 1024;
                 index++;
@@ -500,7 +511,7 @@
             const units = ['B', 'KB', 'MB', 'GB'];
             let index = 0;
             let value = bytes;
-            
+
             while (value >= 1024 && index < units.length - 1) {
                 value /= 1024;
                 index++;
@@ -512,7 +523,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Проверяем соединение при загрузке
             initializeSignalR();
-            
+
             // Добавляем обработчик Enter в поле ввода
             document.getElementById('url').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
@@ -522,4 +533,5 @@
         });
     </script>
 </body>
+
 </html>
