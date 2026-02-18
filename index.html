@@ -422,7 +422,14 @@
 
         // Завершение загрузки
         function onDownloadComplete(data) {
-            document.getElementById('statusText').textContent = 'Загрузка завершена!';
+
+            showToast("Файл готов!", "success");
+
+            const backendUrl = "https://api.cloud-platform.pro/offtube";
+            const downloadUrl = backendUrl + data.downloadUrl;
+
+            window.location.href = downloadUrl;
+            /*document.getElementById('statusText').textContent = 'Загрузка завершена!';
             document.getElementById('progressBar').style.width = '100%';
             document.getElementById('progressPercent').textContent = '100%';
 
@@ -430,7 +437,7 @@
                 document.getElementById('fileSize').textContent = formatFileSize(data.fileSize);
             }
 
-            showToast('Файл готов к скачиванию!', 'success');
+            showToast('Файл готов к скачиванию!', 'success');*/
         }
 
         // Скачивание файла
