@@ -372,29 +372,13 @@
                     throw new Error(error);
                 }
 
-                // Получаем файл
-                const blob = await response.blob();
-
-                // Извлекаем имя файла из заголовков
-                const contentDisposition = response.headers.get('Content-Disposition');
-                let filename = 'video.mp4';
-                if (contentDisposition) {
-                    const match = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
-                    if (match && match[1]) {
-                        filename = match[1].replace(/['"]/g, '');
-                    }
-                }
-
-                // Скачиваем файл
-                downloadFile(blob, filename);
-
             } catch (error) {
                 console.error("Download error:", error);
                 showError(error.message);
             } finally {
                 // Разблокируем кнопку
-                downloadBtn.disabled = false;
-                downloadBtn.innerHTML = '<i class="fa-solid fa-download"></i><span>Скачать</span>';
+                //downloadBtn.disabled = false;
+                //downloadBtn.innerHTML = '<i class="fa-solid fa-download"></i><span>Скачать</span>';
             }
         }
 
@@ -427,17 +411,20 @@
 
             const backendUrl = "https://api.cloud-platform.pro/offtube";
             const downloadUrl = backendUrl + data.downloadUrl;
-
-            window.location.href = downloadUrl;
-            /*document.getElementById('statusText').textContent = 'Загрузка завершена!';
+            
+            document.getElementById('statusText').textContent = 'Загрузка завершена!';
             document.getElementById('progressBar').style.width = '100%';
             document.getElementById('progressPercent').textContent = '100%';
 
-            if (data.fileSize) {
-                document.getElementById('fileSize').textContent = formatFileSize(data.fileSize);
-            }
+            downloadBtn.disabled = false;
 
-            showToast('Файл готов к скачиванию!', 'success');*/
+            window.location.href = downloadUrl;
+
+            /*if (data.fileSize) {
+                document.getElementById('fileSize').textContent = formatFileSize(data.fileSize);
+            }*/
+
+            //showToast('Файл готов к скачиванию!', 'success');
         }
 
         // Скачивание файла
