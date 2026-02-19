@@ -196,7 +196,7 @@
     <script>
         let connection = null;
         let downloadId = null;
-        let currentQuality = 'best[height <= 480]';
+        let currentQuality = 'best[height <= 480]';        
 
         // Инициализация SignalR соединения
         async function initializeSignalR() {
@@ -233,7 +233,7 @@
                     console.log("Connection closed", error);
                 });
 
-                await connection.start();
+                await connection.start();                
                 console.log("SignalR connected to /downloadHub");
                 showToast("Подключено к серверу", "success");
 
@@ -363,7 +363,8 @@
                     body: JSON.stringify({
                         url: url,
                         quality: currentQuality,
-                        downloadId: downloadId
+                        downloadId: downloadId,
+                        connectionId: connection.connectionId,
                     })
                 });
 
