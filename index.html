@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouTube Video Downloader</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script
+        src="https://www.google.com/recaptcha/enterprise.js?render=6LcYBnMsAAAAAGsrT_tuX2QPQevtMl8OTcz_-ARm"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -196,7 +198,7 @@
     <script>
         let connection = null;
         let downloadId = null;
-        let currentQuality = 'best[height <= 480]';        
+        let currentQuality = 'best[height <= 480]';
 
         // Инициализация SignalR соединения
         async function initializeSignalR() {
@@ -233,7 +235,7 @@
                     console.log("Connection closed", error);
                 });
 
-                await connection.start();                
+                await connection.start();
                 console.log("SignalR connected to /downloadHub");
                 showToast("Подключено к серверу", "success");
 
@@ -348,6 +350,14 @@
                 // Генерируем ID для этой загрузки
                 downloadId = generateDownloadId();
 
+                let recaptchaToken;
+                try {
+                    recaptchaToken = await getRecaptchaToken();
+                } catch (recaptchaError) {
+                    console.error("reCAPTCHA error:", recaptchaError);
+                    throw new Error("Не удалось подтвердить, что вы не робот");
+                }
+
                 // Подключаемся к группе SignalR
                 //await connection.invoke("JoinDownloadGroup", downloadId);
                 //console.log("Joined group:", downloadId);
@@ -365,6 +375,7 @@
                         quality: currentQuality,
                         downloadId: downloadId,
                         connectionId: connection.connectionId,
+                        recaptchaToken: recaptchaToken
                     })
                 });
 
@@ -381,6 +392,31 @@
                 //downloadBtn.disabled = false;
                 //downloadBtn.innerHTML = '<i class="fa-solid fa-download"></i><span>Скачать</span>';
             }
+        }
+
+        async function getRecaptchaToken() {
+            // Убеждаемся, что reCAPTCHA загружена
+            if (typeof grecaptcha === 'undefined' || typeof grecaptcha.enterprise === 'undefined') {
+                throw new Error("reCAPTCHA не загружена");
+            }
+
+            return new Promise((resolve, reject) => {
+                try {
+                    grecaptcha.enterprise.ready(async () => {
+                        try {
+                            // Ваш site key от Google
+                            const siteKey = '6LcYBnMsAAAAAGsrT_tuX2QPQevtMl8OTcz_-ARm';
+                            // Используем действие 'download' вместо 'LOGIN' для вашего случая
+                            const token = await grecaptcha.enterprise.execute(siteKey, { action: 'download' });
+                            resolve(token);
+                        } catch (error) {
+                            reject(error);
+                        }
+                    });
+                } catch (error) {
+                    reject(error);
+                }
+            });
         }
 
         // Обновление прогресса
@@ -412,7 +448,7 @@
 
             const backendUrl = "https://api.cloud-platform.pro/offtube";
             const downloadUrl = backendUrl + data.downloadUrl;
-            
+
             document.getElementById('statusText').textContent = 'Загрузка завершена!';
             document.getElementById('progressBar').style.width = '100%';
             document.getElementById('progressPercent').textContent = '100%';
